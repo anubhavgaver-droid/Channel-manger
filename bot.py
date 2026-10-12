@@ -7,7 +7,7 @@ import config
 from admin import register_admin_handlers
 from start import register_start_handlers
 
-# High performance loop
+# High performance loop installation
 uvloop.install()
 
 logging.basicConfig(
@@ -15,17 +15,6 @@ logging.basicConfig(
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
-
-app = Client(
-    "MultiChannelProtectionBot",
-    api_id=config.API_ID,
-    api_hash=config.API_HASH,
-    bot_token=config.BOT_TOKEN
-)
-
-# Register handlers from modular files
-register_admin_handlers(app)
-register_start_handlers(app)
 
 # --- Render Web Server & Self-Ping Keep-Alive Setup ---
 routes = web.RouteTableDef()
@@ -58,6 +47,18 @@ async def self_ping():
         await asyncio.sleep(300) # Ping every 5 minutes
 
 async def main():
+    # Initialize Pyrogram Client inside main() where event loop is active
+    app = Client(
+        "MultiChannelProtectionBot",
+        api_id=config.API_ID,
+        api_hash=config.API_HASH,
+        bot_token=config.BOT_TOKEN
+    )
+
+    # Register handlers inside main loop
+    register_admin_handlers(app)
+    register_start_handlers(app)
+
     # Start web server and background keep-alive task
     await start_web_server()
     asyncio.create_task(self_ping())
