@@ -25,17 +25,23 @@ async def check_user_subscriptions(client, user_id: int, target_channel_id: int)
         is_member = False
         try:
             member = await client.get_chat_member(ch_id, user_id)
-            # Verify if user has an active participant status
-            if member.status in ["member", "administrator", "creator"]:
+            
+            # Safely convert status to lowercase string to handle Pyrogram Enums correctly
+            status = str(member.status).lower()
+            
+            # If status is NOT left, banned, or kicked, it means the user is a valid member
+            if any(s in status for s in ["member", "administrator", "creator", "owner"]):
                 is_member = True
+            elif status not in ["left", "banned", "kicked"]:
+                is_member = True
+                
         except UserNotParticipant:
             is_member = False
         except Exception as e:
             logger.error(f"Error checking membership for channel {ch_id}: {e}")
-            # If any exception occurs (e.g. bot not admin), treat as not joined for safety
             is_member = False
 
-        # If user is not a member, generate invite link and add to missing list
+        # If user is truly not a member, generate invite link and add to missing list
         if not is_member:
             try:
                 invite = await client.create_chat_invite_link(chat_id=ch_id)
