@@ -71,4 +71,5 @@ def register_start_handlers(app):
                 f"Hello {first_name}!\n\n"
                 "Welcome to the Content Protection & Access Bot.\n"
                 "Please open a designated share link to access target channel content."
+                "🌱 [Updates ↗️](https://t.me/pratilipi0900)   "
             )
