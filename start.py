@@ -1,5 +1,6 @@
 import re
 from pyrogram import filters
+from pyrogram.enums import ParseMode
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from database import db
 from force import check_user_subscriptions
@@ -68,8 +69,12 @@ def register_start_handlers(app):
                 )
         else:
             await message.reply_text(
-                f"Hello {first_name}!\n\n"
-                "Welcome to the Content Protection & Access Bot.\n"
-                "Please open a designated share link to access target channel content."
-                "🌱 [Updates ↗️](https://t.me/pratilipi0900)   "
-            )
+    f"Hello {first_name}!\n\n"
+    "Welcome to the Content Protection & Access Bot.\n"
+    "Please open a designated share link to access target channel content.\n\n"
+    "🌱 [Updates ↗️](https://t.me/pratilipi0900)  💎 [Support ↗️](https://t.me/your_group)  🔎 [Privacy ↗️](https://t.me/your_link)\n"
+    "            ⭐ [Rate ↗️](https://t.me/tappsbot)",
+    parse_mode=ParseMode.MARKDOWN,
+    disable_web_page_preview=True
+)
+
