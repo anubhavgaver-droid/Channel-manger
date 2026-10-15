@@ -68,13 +68,26 @@ def register_start_handlers(app):
                     reply_markup=keyboard
                 )
         else:
-            await message.reply_text(
+            text = (
     f"Hello {first_name}!\n\n"
     "Welcome to the Content Protection & Access Bot.\n"
-    "Please open a designated share link to access target channel content.\n\n"
-    "🌱 [Updates ↗️](https://t.me/pratilipi0900)  💎 [Support ↗️](https://t.me/your_group)  🔎 [Privacy ↗️](https://t.me/your_link)\n"
-    "            ⭐ [Rate ↗️](https://t.me/tappsbot)",
-    parse_mode=ParseMode.MARKDOWN,
-    disable_web_page_preview=True
+    "Please open a designated share link to access target channel content."
 )
 
+# Inline Buttons Layout
+reply_markup = InlineKeyboardMarkup([
+    [
+        InlineKeyboardButton("🌱 Updates ↗️", url="https://t.me/pratilipi0900"),
+        InlineKeyboardButton("💎 Support ↗️", url="https://t.me/your_support_group")
+    ],
+    [
+        InlineKeyboardButton("⭐ Rate ↗️", url="https://t.me/tappsbot")
+    ]
+])
+
+# Message send karte waqt reply_markup pass karein
+await message.reply_text(
+    text=text,
+    reply_markup=reply_markup,
+    disable_web_page_preview=True
+)
