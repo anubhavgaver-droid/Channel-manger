@@ -68,26 +68,27 @@ def register_start_handlers(app):
                     reply_markup=keyboard
                 )
         else:
+            # Normal /start command without payload
             text = (
-    f"Hello {first_name}!\n\n"
-    "Welcome to the Content Protection & Access Bot.\n"
-    "Please open a designated share link to access target channel content."
-)
+                f"Hello {first_name}!\n\n"
+                "Welcome to the Content Protection & Access Bot.\n"
+                "Please open a designated share link to access target channel content."
+            )
 
-# Inline Buttons Layout
-reply_markup = InlineKeyboardMarkup([
-    [
-        InlineKeyboardButton("🌱 Updates ↗️", url="https://t.me/pratilipi0900"),
-        InlineKeyboardButton("💎 Support ↗️", url="https://t.me/your_support_group")
-    ],
-    [
-        InlineKeyboardButton("⭐ Rate ↗️", url="https://t.me/tappsbot")
-    ]
-])
+            # Inline Buttons Layout
+            reply_markup = InlineKeyboardMarkup([
+                [
+                    InlineKeyboardButton("🌱 Updates ↗️", url="https://t.me/pratilipi0900"),
+                    InlineKeyboardButton("💎 Support ↗️", url="https://t.me/your_support_group")
+                ],
+                [
+                    InlineKeyboardButton("⭐ Rate ↗️", url="https://t.me/tappsbot")
+                ]
+            ])
 
-# Message send karte waqt reply_markup pass karein
-await message.reply_text(
-    text=text,
-    reply_markup=reply_markup,
-    disable_web_page_preview=True
-)
+            # Send message with reply_markup
+            await message.reply_text(
+                text=text,
+                reply_markup=reply_markup,
+                disable_web_page_preview=True
+            )
